@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 25.0, top: 30.0),
-              child: Text("_user.displayName",
+              child: Text("你的名字",
                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0)),
             ),
             Padding(

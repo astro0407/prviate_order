@@ -5,12 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'article_detail_page.dart';
 
-class InstaList extends StatefulWidget {
+class ContentListWidget extends StatefulWidget {
   @override
-  _InstaListState createState() => _InstaListState();
+  _ContentListWidgetState createState() => _ContentListWidgetState();
 }
 
-class _InstaListState extends State<InstaList> {
+class _ContentListWidgetState extends State<ContentListWidget> {
   bool isPressed = false;
 
   static const List<String> usernames = [
@@ -29,10 +29,12 @@ class _InstaListState extends State<InstaList> {
     [
       "https://mmbiz.qpic.cn/mmbiz_png/OibQfvnjCgF4SG2uEV3PMU8lZc39kSHpSsNdUHgZ1x3B2QsIszbkqbvHQ8chDzcfwBUP9Xgtruac6MBVoxF2GTA/640?wx_fmt=png"
     ],
-    [ "https://mmbiz.qpic.cn/mmbiz_png/OibQfvnjCgF4ib9lITZejgwK9D45L8HqKUhdHewMwsiaia19Aeciaibmc0PKv1fkaBpdRmpR8QyxRTdWZ26YeJRwCibDg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1",
+    [
+      "https://mmbiz.qpic.cn/mmbiz_png/OibQfvnjCgF4ib9lITZejgwK9D45L8HqKUhdHewMwsiaia19Aeciaibmc0PKv1fkaBpdRmpR8QyxRTdWZ26YeJRwCibDg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1",
       "https://mmbiz.qpic.cn/mmbiz_png/OibQfvnjCgF5pwwxYniaW4Fnk0WpcjoMcgvW47tCBGfMWuVvHVaDEUcbCicgKhJTGV2s3nDoA6HyZKjb4VIukCLWw/0?wx_fmt=png"
     ],
     [
+      "https://mmbiz.qpic.cn/mmbiz_jpg/hzIYNfXiabPX8HcOxiaBgrhtjktuOzZc0noYaGH9uauF91MDLwBicj9xyGJ7x8B7UHXDJgiclcojpFd1VN4uibKRjtA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1",
       "https://mmbiz.qpic.cn/mmbiz_jpg/hzIYNfXiabPUmEugVdxITOX7n3xV4IAf0PhicbnBblZ3XhNicA4gDq0zZcNuhSBCdqhBCbTPmLpKicedPSjjAlrnjg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1",
       "https://mmbiz.qpic.cn/mmbiz_jpg/hzIYNfXiabPUmEugVdxITOX7n3xV4IAf016ibTiccTydA2x0kELzqNU0BcSMEybKtcn8pEzicTlJWYAb6RLKmDZtog/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1",
       "https://mmbiz.qpic.cn/mmbiz_jpg/hzIYNfXiabPUmEugVdxITOX7n3xV4IAf0fVDiaCNlZ0ufTwJPpra1Vf8Y2Gwa9sog0X1YibVP2G0HEOwKKAQSI8vg/640?wx_fmt=jpeg"

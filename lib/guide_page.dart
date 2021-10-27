@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'home_page.dart';
-import 'profile_page.dart';
+import 'home/home_page.dart';
+import 'profile/profile_page.dart';
 
 class GuidePage extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'insta_list.dart';
+import 'content_list_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -27,8 +27,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Expanded(flex: 1, child:  InstaStories()),
-          Flexible(child: InstaList())
+          Flexible(child: ContentListWidget())
         ],
       ),
     );

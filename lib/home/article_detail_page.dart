@@ -2,6 +2,10 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
+import 'package:private_order/loading/ball/ball.dart';
+import 'package:private_order/loading/ball/ball_3_opacity.dart';
+import 'package:private_order/loading/ball/ball_style.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'dart:io';
@@ -9,7 +13,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:private_order/http/api.dart';
 
-import 'http/http_model.dart';
+import '../http/http_model.dart';
 
 class ArticleDetailPage extends StatefulWidget {
   final String url;
@@ -21,6 +25,8 @@ class ArticleDetailPage extends StatefulWidget {
 }
 
 class _ArticleDetailPageState extends State<ArticleDetailPage> {
+  var parser = EmojiParser();
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +48,12 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState != ConnectionState.done) {
                     return InkWell(
-                      child: Icon(Icons.search),
+                      child: Container(
+                        width: 40,
+                        child: Ball3OpacityLoading(
+                          ballStyle: BallStyle(size: 4.5, color: Colors.black),
+                        ),
+                      ),
                       onTap: () {
                         EasyLoading.showToast("正在解析淘口令...");
                       },
@@ -51,7 +62,18 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
 
                   var data = snapshot.data;
                   return InkWell(
-                    child: Icon(Icons.more_horiz),
+                    child: Container(
+                        width: 40,
+                        child: Row(
+                          children: List.generate(3, (index) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 1.5),
+                              child: Ball(
+                                style: BallStyle(size: 4.5, color: Colors.black),
+                              ),
+                            );
+                          }),
+                        )),
                     onTap: () {
                       showModalBottomSheet(
                         context: context,
@@ -64,17 +86,22 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
                               return Container();
                             }
 
-                            return Center(
+                            var point = parser.getEmoji('👉').code;
+                            var heart = parser.getEmoji('❤').code;
+                            return InkWell(
                               child: Container(
-                                padding: EdgeInsets.fromLTRB(0, 20.h, 0, 20.h),
-                                child: InkWell(
-                                  child: Text("$str"),
-                                  onTap: () {
-                                    FlutterClipboard.copy(str);
-                                    _launchURL();
-                                  },
-                                ),
-                              ),
+                                  padding: EdgeInsets.fromLTRB(0, 20.h, 0, 20.h),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(width: 0.1, color: Colors.grey),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [Text("$point$str$heart")],
+                                  )),
+                              onTap: () {
+                                FlutterClipboard.copy(str);
+                                _launchURL();
+                              },
                             );
                           }).toList());
                         },
@@ -83,7 +110,7 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
                   );
                 }),
             SizedBox(
-              width: 40.w,
+              width: 10.w,
             )
           ],
         ),
@@ -114,6 +141,7 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
       r"(\₰|\¥|\\(|\\)|\《|\￥|\€|\\$|\₤|\₳|\¢|\¤|\฿|\฿|\₵|\₡|\₫|\₲|\₭|£|\₥|\₦|\₱|\〒|\₮|\₩|\₴|\₪|\៛|\﷼|\₢|\ℳ|\₯|\₠|\₣|\₧|\ƒ)([a-zA-Z0-9]{11})(\₰|\¥|\\(|\\)|\《|\￥|\€|\\$|\₤|\₳|\¢|\¤|\฿|\฿|\₵|\₡|\₫|\₲|\₭|£|\₥|\₦|\₱|\〒|\₮|\₩|\₴|\₪|\៛|\﷼|\₢|\ℳ|\₯|\₠|\₣|\₧|\ƒ)"; //目前淘口令是11位
 
   Future<List<String>> _getTaoKouLin() async {
+    var startTime = DateTime.now().millisecondsSinceEpoch;
     var dio = getDio();
     var response = await dio.get(widget.url);
     var data = response.data;
@@ -131,10 +159,17 @@ class _ArticleDetailPageState extends State<ArticleDetailPage> {
         var end = element.end;
         var substring = str.substring(start, end);
         list.add(substring.toString());
-        print("tao:$substring");
       });
     } catch (e) {
       print(e);
+    }
+
+    var endTime = DateTime.now().millisecondsSinceEpoch;
+
+    var i = endTime - startTime;
+    if (i < 3000) {
+      var durationTime = 3000 - i;
+      await Future.delayed(Duration(milliseconds: durationTime));
     }
 
     return Future.value(list);
